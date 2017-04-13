@@ -39,7 +39,8 @@ module Airbrake
       IOError,
       NotImplementedError,
       JSON::GeneratorError,
-      Encoding::UndefinedConversionError
+      Encoding::UndefinedConversionError,
+      ActiveSupport::JSON::Encoding::CircularReferenceError
     ].freeze
 
     # @return [Array<Symbol>] the list of keys that can be be overwritten with
@@ -88,7 +89,7 @@ module Airbrake
     def to_json
       loop do
         begin
-          json = @payload.to_json
+          json = JSON.generate @payload
         rescue *JSON_EXCEPTIONS => ex
           @config.logger.debug("#{LOG_LABEL} `notice.to_json` failed: #{ex.class}: #{ex}")
         else
