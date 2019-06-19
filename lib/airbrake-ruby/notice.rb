@@ -40,7 +40,6 @@ module Airbrake
       NotImplementedError,
       JSON::GeneratorError,
       Encoding::UndefinedConversionError,
-      ActiveSupport::JSON::Encoding::CircularReferenceError
     ].freeze
 
     # @return [Array<Symbol>] the list of keys that can be be overwritten with
